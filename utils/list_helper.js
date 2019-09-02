@@ -4,26 +4,26 @@ const dummy = (blogs) => {
 
 const totalLikes = (blogs) => {
     const reducer = (sum, item) => {
-        return sum + item
+        return sum + item.likes
     }
-    const likesList = blogs.map(blog => blog.likes)
-    return likesList.reduce(reducer, 0)
+    return blogs.reduce(reducer, 0)
 }
 
 const favoriteBlog = (blogs) => {
     if (blogs.length === 0) {
         return null
     }
-    let favBlog = blogs[0]
+
+    let mostLiked = blogs[0]
     blogs.forEach(blog => {
-        if(blog.likes > favBlog.likes) {
-            favBlog = blog
+        if(blog.likes > mostLiked.likes) {
+            mostLiked = blog
         }
     })
     return {
-        title: favBlog.title,
-        author: favBlog.author,
-        likes: favBlog.likes
+        title: mostLiked.title,
+        author: mostLiked.author,
+        likes: mostLiked.likes
     }
 }
 
