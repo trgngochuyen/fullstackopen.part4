@@ -68,7 +68,7 @@ test('dummy returns one', () => {
     expect(result).toBe(1)
 })
 
-describe('total likes', () => {
+/*describe('total likes', () => {
     test('of empty list return zero', () => {
       const result = listHelper.totalLikes([])
       expect(result).toBe(0)
@@ -84,24 +84,34 @@ describe('total likes', () => {
 })
 
 describe('most liked blog', () => {
-    test('of an empty list returns null', () => {
-      const result = listHelper.favoriteBlog([])
-      expect(result).toEqual(null)
+  test('of an empty list returns null', () => {
+    const result = listHelper.favoriteBlog([])
+    expect(result).toEqual(null)
+  })
+  test('of a list of one blog return itself', () => {
+    const result = listHelper.favoriteBlog(listWithOneBlog)
+    expect(result).toEqual({
+      title: 'Go To Statement Considered Harmful',
+      author: 'Edsger W. Dijkstra',
+      likes: 5
     })
-    test('of a list of one blog return itself', () => {
-      const result = listHelper.favoriteBlog(listWithOneBlog)
-      expect(result).toEqual({
-        title: 'Go To Statement Considered Harmful',
-        author: 'Edsger W. Dijkstra',
-        likes: 5
-      })
+  })
+  test('of a list of blogs returns the most liked', () => {
+    const result = listHelper.favoriteBlog(listWithManyBlog)
+    expect(result).toEqual({
+      title: "Canonical string reduction",
+      author: "Edsger W. Dijkstra",
+      likes: 12
     })
-    test('of a list of blogs returns the most liked', () => {
-      const result = listHelper.favoriteBlog(listWithManyBlog)
-      expect(result).toEqual({
-        title: "Canonical string reduction",
-        author: "Edsger W. Dijkstra",
-        likes: 12
-      })
-    })
+  })
 })
+
+describe('author blogs the most', () => {
+  test('of an empty list return null', () => {
+    expect(listHelper.mostBlogs([])).toBe(null)
+  })
+  test('of a list of blogs returns author with most blogs', () => {
+    const result = listHelper.mostBlogs(listWithManyBlog)
+    expect(result).toBe("Robert C. Martin")
+  })
+})*/
