@@ -46,10 +46,34 @@ test('all blogs are returned', async () => {
     expect(response.body.length).toBe(initialBlogs.length)
 })
 
-test.only('unique identifier property is named id', async () => {
+test('unique identifier property is named id', async () => {
     const response = await api.get('/api/blogs')
     const identifier = response.body.map(r => r.id)
     expect(identifier).toBeDefined()
+})
+
+test.only('a valid blog can be added', async () => {
+    const newBlog = {
+        title: 'Porkkanakakku',
+        author: 'Yan',
+        url: 'http://localhost:3003/api/blogs/9',
+        likes: 829
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+    
+    const response = await api.get('/api/blogs')
+    const titles = response.body.map(r => r.title)
+    const authors = response.body.map(r => r.author)
+    const numberOfBlogsAfter = response.body.length
+
+    expect(numberOfBlogsAfter).toBe(initialBlogs.length +1)
+    expect(titles).toContain('Porkkanakakku')
+    expect(authors).toContain('Yan')
 })
 
 afterAll(() => {
