@@ -15,7 +15,7 @@ beforeEach(async () => {
     await Promise.all(promiseArray)
 })
 
-test('blogs are returned as json', async () => {
+/*test('blogs are returned as json', async () => {
     await api
         .get('/api/blogs')
         .expect(200)
@@ -91,6 +91,25 @@ describe('test HTTP POST request', async => {
         
         const blogsAfter = await helper.blogsInDb()
         expect(blogsAfter.length).toBe(helper.initialBlogs.length)
+    })
+})*/
+
+describe('deleting a blog', () => {
+    test('delete a blog with a valid id', async () => {
+        const blogsBefore = await helper.blogsInDb()
+        const blogToDelete = blogsBefore[1]
+
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`)
+            .expect(204)
+
+        const blogsAfter = await helper.blogsInDb()
+
+        expect(blogsAfter.length).toBe(helper.initialBlogs.length - 1)
+        
+        const titles = blogsAfter.map(b => b.title)
+
+        expect(titles).not.toContain(blogToDelete.title)
     })
 })
 

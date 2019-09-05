@@ -28,4 +28,13 @@ router.post('/', async (request, response, next) => {
     }
 })
 
+router.delete('/:id', async (request, response, next) => {
+    try {
+        await Blog.findByIdAndRemove(request.params.id)
+        response.status(204).end()
+    } catch (exception) {
+        next(exception)
+    }
+})
+
 module.exports = router
