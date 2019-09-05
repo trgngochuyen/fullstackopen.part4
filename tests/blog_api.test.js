@@ -34,7 +34,7 @@ test('unique identifier property is named id', async () => {
     expect(identifier).toBeDefined()
 })
 
-describe.only('test HTTP POST request', async => {
+describe('test HTTP POST request', async => {
     test('a valid blog can be added', async () => {
         const newBlog = {
             title: 'Porkkanakakku',
@@ -77,6 +77,20 @@ describe.only('test HTTP POST request', async => {
         // if likes property is missing from the request, default value will be 0
 
         expect(response.body.likes).toBe(0)
+    })
+
+    test('blog missing title or url will be rejected', async () => {
+        const newBlog = {
+            author: 'Jenni'
+        }
+    
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .expect(400)
+        
+        const blogsAfter = await helper.blogsInDb()
+        expect(blogsAfter.length).toBe(helper.initialBlogs.length)
     })
 })
 

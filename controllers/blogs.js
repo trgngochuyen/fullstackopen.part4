@@ -16,17 +16,16 @@ router.post('/', async (request, response, next) => {
     })
     
     try {
-        const savedBlog = await blog.save()
-        response.status(201)
-        response.json(savedBlog.toJSON())
+        if (!body.title && !body.url) {
+            response.status(400).end()
+        } else {
+            const savedBlog = await blog.save()
+            response.status(201)
+            response.json(savedBlog.toJSON())
+        }
     } catch(exception) {
         next(exception)
     }
-    /*blog
-        .save()
-        .then(result => {
-            response.status(201).json(result)
-        })*/
 })
 
 module.exports = router
