@@ -162,6 +162,46 @@ describe('when there is initially one user at db', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd.length).toBe(usersAtStart.length)
     })
+    test('creation fails with proper status code and message if username is shorter than 3 characters', async () => {
+        const usersAtStart = await helper.usersInDb()
+
+        const newUser = {
+            username: 'ty',
+            name: 'tada',
+            password: 'theuthao',
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body.error).toContain('User validation failed: username: Path `username` (`ty`) is shorter than the minimum allowed length (3).')
+        
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd.length).toBe(usersAtStart.length)
+    })
+    test('creation fails with proper status code and message if password is shorter than 3 characters', async () => {
+        const usersAtStart = await helper.usersInDb()
+
+        const newUser = {
+            username: 'tuy',
+            name: 'tada',
+            password: 'to',
+        }
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        expect(result.body.error).toContain('Password and Username must contain at least 3 characters')
+        
+        const usersAtEnd = await helper.usersInDb()
+        expect(usersAtEnd.length).toBe(usersAtStart.length)
+    })
 })
 
 afterAll(() => {
