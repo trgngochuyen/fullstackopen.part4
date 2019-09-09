@@ -67,9 +67,22 @@ router.put('/:id', async (request, response, next) => {
 })
 
 router.delete('/:id', async (request, response, next) => {
+    const token = request.token
+    const blog = await Blog.findById(request.params.id)
+
     try {
-        await Blog.findByIdAndRemove(request.params.id)
-        response.status(204).end()
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        if (token && decodedToken.id === blog.user.toString()) {
+            // delete the blog in blogs collection
+            await Blog.findByIdAndRemove(request.params.id)
+            // find the user by the id returned from decodedtoken, then update the blogs array in the user document
+            const theUser = await User.findById(decodedToken.id)
+            theUser.blogs = theUser.blogs.filter(b => b.toString() !== request.params.id) 
+            response.status(204).end()
+        } else if (!token && !decodedToken.id) {
+            return response.status(401).json({ error: 'token missing or invalid' })
+        }
+        
     } catch (exception) {
         next(exception)
     }
