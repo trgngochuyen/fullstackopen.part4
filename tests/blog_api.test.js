@@ -212,7 +212,7 @@ describe('when there is initially one user at db', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd.length).toBe(usersAtStart.length)
     })
-})*/
+})
 
 describe('author blogs the most', () => {
 
@@ -228,20 +228,54 @@ describe('author blogs the most', () => {
         return {
             author: maxAuthor,
             blogs: maxBlogs
-        }
-       
+        }  
     }
 
     test('of an empty list return null', async () => {
       expect(mostBlogs([])).toBe(null)
     })
     test('of a list of blogs returns author with most blogs', async () => {
-      const users = await Blog.find({})
+      const blogs = await Blog.find({})
       const result = mostBlogs(users)
       expect(result).toEqual({
           author: "Woodz",
           blogs: 2
       })
+    })
+})*/
+
+describe('author has the most likes', () => {
+    const mostLikes = (blogs) => {
+        if (blogs.length === 0) {
+            return null
+        }
+        const authors = blogs.map(blog => {
+            return { 'author': blog.author, 'likes': blog.likes }
+        })
+        const sumLikes = _(authors)
+            .groupBy('author')
+            .map((objs, key) => {
+                return {
+                    'author': key,
+                    'likes': _.sumBy(objs, 'likes')
+                }
+            })
+            .value()
+        const maxLikes = _.maxBy(sumLikes, s => s.likes)
+        
+        return maxLikes
+    }
+
+    test('of an empty list return null', async () => {
+        expect(mostLikes([])).toBe(null)
+    })
+    test('of a list of blogs returns author with most likes', async () => {
+        const blogs = await helper.blogsInDb()
+        const result = mostLikes(blogs)
+        expect(result).toEqual({
+            author: "Woodz",
+            likes: 319216
+        })
     })
 })
 
