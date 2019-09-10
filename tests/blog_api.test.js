@@ -26,20 +26,20 @@ beforeEach(async () => {
     await Promise.all(promiseArray)*/
 })
 
-/*test('blogs are returned as json', async () => {
+test('blogs are returned as json', async () => {
     await api
         .get('/api/blogs')
         .expect(200)
         .expect('Content-Type', /application\/json/)
 })
 
-test('all blogs are returned', async () => {
+test.only('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
     
     expect(response.body.length).toBe(helper.initialBlogs.length)
 })
 
-test('unique identifier property is named id', async () => {
+/*test('unique identifier property is named id', async () => {
     const response = await api.get('/api/blogs')
     const identifier = response.body.map(r => r.id)
     expect(identifier).toBeDefined()
@@ -212,7 +212,7 @@ describe('when there is initially one user at db', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd.length).toBe(usersAtStart.length)
     })
-})
+})*/
 
 describe('author blogs the most', () => {
 
@@ -235,14 +235,14 @@ describe('author blogs the most', () => {
       expect(mostBlogs([])).toBe(null)
     })
     test('of a list of blogs returns author with most blogs', async () => {
-      const blogs = await Blog.find({})
+      const blogs = await helper.blogsInDb()
       const result = mostBlogs(users)
       expect(result).toEqual({
           author: "Woodz",
           blogs: 2
       })
     })
-})*/
+})
 
 describe('author has the most likes', () => {
     const mostLikes = (blogs) => {
@@ -262,7 +262,7 @@ describe('author has the most likes', () => {
             })
             .value()
         const maxLikes = _.maxBy(sumLikes, s => s.likes)
-        
+
         return maxLikes
     }
 
