@@ -10,20 +10,20 @@ const User = require('../models/user')
 
 beforeEach(async () => {
     // Reset blogs test collection, commented out when not testing
-    /*await Blog.deleteMany({})
+    await Blog.deleteMany({})
 
     const blogObjects = helper.initialBlogs
         .map(blog => new Blog(blog))
     const promiseArray = blogObjects.map(blog => blog.save())
-    await Promise.all(promiseArray)*/
+    await Promise.all(promiseArray)
     
     // Reset users test collection, commented out when not testing
-    await User.deleteMany({})
+    /*await User.deleteMany({})
 
     const userObjects = helper.initialUsers
         .map(user => new User(user))
     const promiseArray = userObjects.map(user => user.save())
-    await Promise.all(promiseArray)
+    await Promise.all(promiseArray)*/
 })
 
 /*test('blogs are returned as json', async () => {
@@ -216,29 +216,31 @@ describe('when there is initially one user at db', () => {
 
 describe('author blogs the most', () => {
 
-    const mostBlogs = (users) => {
-        if (users.length === 0) {
+    const mostBlogs = (blogs) => {
+        if (blogs.length === 0) {
             return null
         }
-        const blogs = users.map(user => user.blogs.length)
-        const max =_.maxBy(blogs, _.value)
-        const mostBlogs = _.find(users, u => (u.blogs.length === max))
+        const authors = blogs.map(blog => blog.author)
+        const count =_.countBy(authors, _.value)
+        const maxBlogs = _.maxBy(_.toArray(count), _.value)
+        const maxAuthor = _.maxBy(_.keys(count), o => count[o])
     
         return {
-            author: mostBlogs.username,
-            blogs: max
+            author: maxAuthor,
+            blogs: maxBlogs
         }
+       
     }
 
-    test('of an empty list return null', () => {
+    test('of an empty list return null', async () => {
       expect(mostBlogs([])).toBe(null)
     })
     test('of a list of blogs returns author with most blogs', async () => {
-      const users = await User.find({})
+      const users = await Blog.find({})
       const result = mostBlogs(users)
       expect(result).toEqual({
-          author: "SeungYeonie",
-          blogs: 7
+          author: "Woodz",
+          blogs: 2
       })
     })
 })

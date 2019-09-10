@@ -3,20 +3,40 @@ const User = require('../models/user')
 
 const initialBlogs = [
     {
-    _id: "5a422a851b54a676234d17f7",
-    title: "React patterns",
-    author: "Michael Chan",
-    url: "https://reactpatterns.com/",
-    likes: 7,
-    __v: 0
+    _id: "5d7537dcb5f6d6126478af51",
+    likes: "545",
+    title: "Busan Vacance",
+    author: "Haha",
+    url: "http://localhost:3003/api/blogs/1",
+    user: "5d73b341337ede72bf0c9cac",
+    __v: 0    
+},
+    {
+    _id: "5d75340ce1f46d11e701778c",
+    likes: "76766",
+    title: "Into a New World",
+    author: "SNSD",
+    url: "http://localhost:3003/api/blogs/2",
+    user: "5d75372eb5f6d6126478af4f",
+    __v: 0    
     },
     {
-    _id: "5a422aa71b54a676234d17f8",
-    title: "Go To Statement Considered Harmful",
-    author: "Edsger W. Dijkstra",
-    url: "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
-    likes: 5,
-    __v: 0
+    _id: "5d75384cb5f6d6126478af53",
+    likes: "253462",
+    title: "Pool",
+    author: "Woodz",
+    url: "http://localhost:3003/api/blogs/3",
+    user: "5d75375bb5f6d6126478af50",
+    __v: 0    
+    },
+    {
+    _id: "5d75385ab5f6d6126478af54",
+    likes: "65754",
+    title: "Different",
+    author: "Woodz",
+    url: "http://localhost:3003/api/blogs/4",
+    user: "5d75375bb5f6d6126478af50",
+    __v: 0    
     }
 ]
 
