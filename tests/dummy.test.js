@@ -1,4 +1,5 @@
 const listHelper = require('../utils/list_helper')
+const User = require('../models/user')
 
 const listWithOneBlog = [
   {
@@ -103,15 +104,5 @@ describe('most liked blog', () => {
       author: "Edsger W. Dijkstra",
       likes: 12
     })
-  })
-})
-
-describe('author blogs the most', () => {
-  test('of an empty list return null', () => {
-    expect(listHelper.mostBlogs([])).toBe(null)
-  })
-  test('of a list of blogs returns author with most blogs', () => {
-    const result = listHelper.mostBlogs(listWithManyBlog)
-    expect(result).toBe("Robert C. Martin")
   })
 })*/

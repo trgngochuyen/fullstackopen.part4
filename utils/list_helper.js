@@ -29,30 +29,8 @@ const favoriteBlog = (blogs) => {
     }
 }
 
-const mostBlogs = (blogs) => {
-    if (blogs.length === 0) {
-        return null
-    }
-    const map = blogs.map(blog => blog.author)
-    const count = _.countBy(map, _.value)
-    const max =_.maxBy(count, _.keys)
-/*  let mostBlogs = count[0]
-    count.forEach(author => {
-        if(author > mostBlogs) {
-            mostBlogs = author
-        }
-    })
-
-    return {
-        author: mostBlogs.key,
-        blogs: mostBlogs.value
-    }
-*/
-    return max
-}
 module.exports = {
     dummy,
     totalLikes,
-    favoriteBlog,
-    mostBlogs
+    favoriteBlog
 }
