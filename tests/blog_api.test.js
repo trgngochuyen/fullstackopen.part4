@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
 const helper = require('./test_helper')
@@ -18,12 +19,12 @@ beforeEach(async () => {
     await Promise.all(promiseArray)
     
     // Reset users test collection, commented out when not testing
-    /*await User.deleteMany({})
+    await User.deleteMany({})
 
     const userObjects = helper.initialUsers
         .map(user => new User(user))
     const promiseArray = userObjects.map(user => user.save())
-    await Promise.all(promiseArray)*/
+    await Promise.all(promiseArray)
 })
 
 test('blogs are returned as json', async () => {
@@ -33,27 +34,27 @@ test('blogs are returned as json', async () => {
         .expect('Content-Type', /application\/json/)
 })
 
-test.only('all blogs are returned', async () => {
+test('all blogs are returned', async () => {
     const response = await api.get('/api/blogs')
     
     expect(response.body.length).toBe(helper.initialBlogs.length)
 })
 
-/*test('unique identifier property is named id', async () => {
+test('unique identifier property is named id', async () => {
     const response = await api.get('/api/blogs')
     const identifier = response.body.map(r => r.id)
     expect(identifier).toBeDefined()
 })
 
-describe('test HTTP POST request', async => {
-    test('a valid blog can be added', async () => {
+describe('test HTTP POST request', () => {
+    test('a valid blog can be added with a valid token', async () => {
         const newBlog = {
             title: 'Porkkanakakku',
             author: 'Yan',
             url: 'http://localhost:3003/api/blogs/9',
             likes: 829
         }
-    
+
         await api
             .post('/api/blogs')
             .send(newBlog)
@@ -125,11 +126,6 @@ describe('deleting a blog', () => {
 })
 
 describe('when there is initially one user at db', () => {
-    beforeEach(async () => {
-        await User.deleteMany({})
-        const user = new User({ username: 'hanna', password: 'lalala' })
-        await user.save()
-    })
     
     test('creation succeeds with a fresh username', async () => {
         const usersAtStart = await helper.usersInDb()
@@ -156,7 +152,7 @@ describe('when there is initially one user at db', () => {
         const usersAtStart = await helper.usersInDb()
 
         const newUser = {
-            username: 'hanna',
+            username: 'hiuhiuhiu',
             name: 'Em La Ai',
             password: 'lololo',
         }
@@ -212,7 +208,7 @@ describe('when there is initially one user at db', () => {
         const usersAtEnd = await helper.usersInDb()
         expect(usersAtEnd.length).toBe(usersAtStart.length)
     })
-})*/
+})
 
 describe('author blogs the most', () => {
 
@@ -236,7 +232,7 @@ describe('author blogs the most', () => {
     })
     test('of a list of blogs returns author with most blogs', async () => {
       const blogs = await helper.blogsInDb()
-      const result = mostBlogs(users)
+      const result = mostBlogs(blogs)
       expect(result).toEqual({
           author: "Woodz",
           blogs: 2
