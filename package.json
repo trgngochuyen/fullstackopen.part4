@@ -23,7 +23,7 @@
   "homepage": "https://github.com/trgngochuyen/fullstackopen.part4#readme",
   "devDependencies": {
     "jest": "^24.9.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "nodemon": "^1.19.1",
     "supertest": "^4.0.2"
   },
